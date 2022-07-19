@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32611.2
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwipeCard", "SwipeCard\SwipeCard.csproj", "{B085A4AD-C3C1-4A1E-8A62-F64A2C28D516}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample", "..\Sample\Sample.csproj", "{7ED44946-9ECA-4EC6-914E-DB818D65665D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{703BD519-DBFD-42BF-9BB3-8B8D6EBCD20D}"
+	ProjectSection(SolutionItems) = preProject
+		..\index.html = ..\index.html
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B085A4AD-C3C1-4A1E-8A62-F64A2C28D516}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B085A4AD-C3C1-4A1E-8A62-F64A2C28D516}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B085A4AD-C3C1-4A1E-8A62-F64A2C28D516}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B085A4AD-C3C1-4A1E-8A62-F64A2C28D516}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7ED44946-9ECA-4EC6-914E-DB818D65665D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7ED44946-9ECA-4EC6-914E-DB818D65665D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7ED44946-9ECA-4EC6-914E-DB818D65665D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7ED44946-9ECA-4EC6-914E-DB818D65665D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1DC48132-2268-469D-9D59-FBB4ED42BE15}
+	EndGlobalSection
+EndGlobal
