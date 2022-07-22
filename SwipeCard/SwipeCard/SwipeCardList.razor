@@ -12,11 +12,12 @@
 </div>
 
 @code {
+
     [Parameter]
     public RenderFragment<IItem> ChildContent { get; set; }
 
     [Parameter]
-    public Action<SwipeDirection> OnSwiped { get; set; }
+    public Action<SwipeAction<IItem>> OnSwiped { get; set; }
 
     [Parameter]
     public List<IItem> Cards { get; set; } = new List<IItem>();
@@ -43,7 +44,7 @@
         var card = Cards.Last();
         Cards.Remove(card);
         await CardsChanged.InvokeAsync(Cards);
-        OnSwiped?.Invoke((SwipeDirection)dir);
+        OnSwiped?.Invoke(new SwipeAction<IItem>((SwipeDirection)dir, card));
         StateHasChanged();
     }
 

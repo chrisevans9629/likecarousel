@@ -100,6 +100,11 @@ class Carousel {
 
         }
 
+        //if (this.currentDirection != e.direction) {
+        //    this.currentDirection = e.direction;
+        //    this.onDirectionChanged();
+        //}
+
         // get new coordinates
         let posX = e.deltaX + this.startPosX
         let posY = e.deltaY + this.startPosY
@@ -189,7 +194,9 @@ class Carousel {
         }
 
     }
+    onDirectionChanged(direction) {
 
+    }
     onCardSwiped(direction) {
 
     }
