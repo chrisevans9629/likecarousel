@@ -9,17 +9,17 @@ namespace SwipeCard
     // This class can be registered as scoped DI service and then injected into Blazor
     // components for use.
 
-    public class ExampleJsInterop : IAsyncDisposable
+    public class SwipeJsInterop : IAsyncDisposable
     {
         private readonly Lazy<Task<IJSObjectReference>> moduleTask;
 
-        DotNetObjectReference<ExampleJsInterop> dotNetRef;
+        DotNetObjectReference<SwipeJsInterop> dotNetRef;
 
-        public ExampleJsInterop(IJSRuntime jsRuntime)
+        public SwipeJsInterop(IJSRuntime jsRuntime)
         {
             dotNetRef = DotNetObjectReference.Create(this);
             moduleTask = new(() => jsRuntime.InvokeAsync<IJSObjectReference>(
-                "import", "./_content/SwipeCard/exampleJsInterop.js").AsTask());
+                "import", "./_content/SwipeCard/swipejs.js").AsTask());
         }
 
         public async ValueTask<string> Prompt(string message)

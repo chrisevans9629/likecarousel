@@ -1,0 +1,40 @@
+﻿@inject IJSRuntime js
+@implements IAsyncDisposable
+<div class="my-component" @onclick="() => interlop.Prompt(string.Empty)">
+    This component is defined in the <strong>SwipeCard</strong> library.
+</div>
+
+<div id="swipeboard" style="background-color: darkblue">
+    <CascadingValue Value="this">
+        @ChildContent
+    </CascadingValue>
+</div>
+
+@code {
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    public List<CardItem> Cards { get; set; } = new List<CardItem>();
+
+    private SwipeJsInterop interlop;
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            interlop = new SwipeJsInterop(js);
+            await interlop.Start();
+        }
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+    public void AddCard(CardItem item)
+    {
+        Cards.Add(item);
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        await interlop.DisposeAsync();   
+    }
+
+}
