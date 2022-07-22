@@ -7,14 +7,7 @@ class Carousel {
     constructor(element) {
 
         this.board = element
-
-        // add first two cards programmatically
-        this.push()
-        this.push()
-
-        // handle gestures
-        this.handle()
-
+        this.handle();
     }
 
     handle() {
@@ -176,9 +169,9 @@ class Carousel {
                 setTimeout(() => {
                     this.onCardSwiped(e.direction);
                     // remove swiped card
-                    this.board.removeChild(this.topCard)
+                    //this.board.removeChild(this.topCard)
                     // add new card
-                    this.push()
+                    //this.push()
                     // handle gestures on new top card
                     this.handle()
                 }, 200)
@@ -203,29 +196,41 @@ class Carousel {
 
     push() {
 
-        let card = document.createElement('div')
+        //let card = document.createElement('div')
 
-        card.classList.add(selector);
+        //card.classList.add(selector);
 
-        card.style.backgroundImage =
-            "url('https://picsum.photos/320/320/?random=" + Math.round(Math.random() * 1000000) + "')"
+        //card.style.backgroundImage =
+        //    "url('https://picsum.photos/320/320/?random=" + Math.round(Math.random() * 1000000) + "')"
 
-        this.board.insertBefore(card, this.board.firstChild)
+        //this.board.insertBefore(card, this.board.firstChild)
 
     }
 
 };
+let dotRef = null;
 
+let carousel = null;
 export function Start(ref) {
+    dotRef = ref;
     let board = document.querySelector('#swipeboard');
     console.log('boarded')
-    let carousel = new Carousel(board);
+    carousel = new Carousel(board);
     console.log('carousel ready');
     carousel.onCardSwiped = function (direction) {
         console.log('direction: ' + direction);
         ref.invokeMethodAsync("Swipe",direction);
     }
 }
+
+export function CardAdded() {
+    carousel.handle();
+}
+
+export function Handle() {
+    carousel.handle();
+}
+
 export function showPrompt(message) {
     return prompt(message, 'Type anything here');
 }

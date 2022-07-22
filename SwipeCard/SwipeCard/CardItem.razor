@@ -1,20 +1,39 @@
-﻿<div class="swipecard">
-    @ChildContent
+﻿@typeparam IItem
+<div class="swipecard" style="@Style">
+    @if(Data != null)
+    {
+        @ChildContent(Data)
+    }
 </div>
 @code {
     [Parameter]
-    public RenderFragment? ChildContent { get; set; }
+    public IItem? Data { get; set; }
+
+    [Parameter]
+    public RenderFragment<IItem> ChildContent { get; set; } = null!;
 
     [CascadingParameter]
-    private SwipeCardList? Parent { get; set; }
+    private SwipeCardList<IItem>? Parent { get; set; }
+
+    [Parameter]
+    public string? Style { get; set; }
+
+    //protected override void OnAfterRender(bool firstRender)
+    //{
+    //    if (firstRender)
+    //    {
+    //        if (Parent == null)
+    //        {
+    //            throw new Exception("must be in swipe card list");
+    //        }
+    //        Parent.AddCard(this);
+    //    }
+    //    base.OnAfterRender(firstRender);
+    //}
 
     protected override void OnInitialized()
     {
-        if (Parent == null)
-        {
-            throw new Exception("must be in swipe card list");
-        }
-        Parent.AddCard(this);
+        
         base.OnInitialized();
     }
 }

@@ -2,19 +2,68 @@
 
 <PageTitle>Index</PageTitle>
 
-<SwipeCardList>
-    <CardItem>
-        <h1>hello world!</h1>
-    </CardItem>
+<SwipeCardList OnSwiped="Swiped" Cards="@Pictures">
+    <div style="@context.Style">
+
+    </div>
 </SwipeCardList>
 
 <div>
-    <label>Card Count: </label>
-    <button>Add Card</button>
+    <label>Card Count: @Pictures.Count</label>
+    <button @onclick="() => AddCard(false)">Add Card</button>
+    <button @onclick="() => AddCard(true)">Add Card At End</button>
     <select></select>
     <button>Remove Card</button>
 </div>
 
+<div>
+    <ul>
+        @foreach (var item in Logs)
+        {
+            <li>@item</li>
+        }
+    </ul>
+</div>
 @code {
+    Random random = new Random();
+    public List<Picture> Pictures { get; set; } = new List<Picture>();
+    public List<string> Logs { get; set; } = new List<string>();
+    public class Picture
+    {
+        public string Url { get; set; }
+        public string Style => $"background-image: url('{Url}'); width: 300px; height: 300px";
+    }
 
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            AddCard(false);
+            AddCard(false);
+        }
+        base.OnAfterRender(firstRender);
+    }
+
+    public void Swiped(SwipeDirection dir)
+    {
+        Logs.Add($"Swiped {dir}");
+        StateHasChanged();
+    }
+
+    public void AddCard(bool atend)
+    {
+        var pic = new Picture();
+
+        pic.Url = "https://picsum.photos/320/320/?random=" + random.Next(0, 1000000);
+        if (atend)
+        {
+            Pictures.Insert(Pictures.Count - 1, pic);
+        }
+        else
+        {
+            Pictures.Add(pic);
+        }
+        StateHasChanged();
+
+    }
 }

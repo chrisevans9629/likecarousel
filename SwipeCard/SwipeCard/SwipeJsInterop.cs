@@ -35,12 +35,25 @@ namespace SwipeCard
             await module.InvokeVoidAsync("Start", dotNetRef);
         }
 
-        public event EventHandler<object>? OnSwipe;
+        public event EventHandler<int>? OnSwipe;
 
         [JSInvokable]
         public void Swipe(int direction)
         {
             OnSwipe?.Invoke(this, direction);
+        }
+
+        public async Task CardAdded()
+        {
+            var module = await moduleTask.Value;
+
+            await module.InvokeVoidAsync("CardAdded");
+        }
+
+        public async Task Handle()
+        {
+            var module = await moduleTask.Value;
+            await module.InvokeVoidAsync("Handle");
         }
 
         public async ValueTask DisposeAsync()

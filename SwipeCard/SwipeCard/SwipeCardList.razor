@@ -1,20 +1,28 @@
 ﻿@inject IJSRuntime js
 @implements IAsyncDisposable
-<div class="my-component" @onclick="() => interlop.Prompt(string.Empty)">
-    This component is defined in the <strong>SwipeCard</strong> library.
-</div>
+@typeparam IItem
 
-<div id="swipeboard" style="background-color: darkblue">
-    <CascadingValue Value="this">
-        @ChildContent
-    </CascadingValue>
+<div id="swipeboard">
+    @foreach (var item in Cards)
+    {
+        <div class="swipecard">
+            @ChildContent(item)
+        </div>
+    }
 </div>
 
 @code {
     [Parameter]
-    public RenderFragment ChildContent { get; set; }
+    public RenderFragment<IItem> ChildContent { get; set; }
 
-    public List<CardItem> Cards { get; set; } = new List<CardItem>();
+    [Parameter]
+    public Action<SwipeDirection> OnSwiped { get; set; }
+
+    [Parameter]
+    public List<IItem> Cards { get; set; } = new List<IItem>();
+
+    [Parameter]
+    public EventCallback<List<IItem>> CardsChanged { get; set; }
 
     private SwipeJsInterop interlop;
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -23,18 +31,32 @@
         {
             interlop = new SwipeJsInterop(js);
             await interlop.Start();
+
+            interlop.OnSwipe += Swiped;
         }
+        await interlop.Handle();
         await base.OnAfterRenderAsync(firstRender);
     }
 
-    public void AddCard(CardItem item)
+    public async void Swiped(object sender, int dir)
+    {
+        var card = Cards.Last();
+        Cards.Remove(card);
+        await CardsChanged.InvokeAsync(Cards);
+        OnSwiped?.Invoke((SwipeDirection)dir);
+        StateHasChanged();
+    }
+
+    public async void AddCard(IItem item)
     {
         Cards.Add(item);
+        interlop.CardAdded();
+        await CardsChanged.InvokeAsync(Cards);
     }
 
     public async ValueTask DisposeAsync()
     {
-        await interlop.DisposeAsync();   
+        await interlop.DisposeAsync();
     }
 
 }
